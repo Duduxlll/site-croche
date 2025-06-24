@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalhes do Produto</title>
+  <link rel="stylesheet" href="css/produto.css">
+</head>
+<body>
+  <header class="header-produto">
+  <div class="container">
+    <h1>Artes em Crochê</h1>
+    <button class="fechar-detalhe" onclick="window.location.href='produtos.html'">✖</button>
+  </div>
+</header>
+
+
+
+
+
+  <main class="produto-detalhe container">
+
+
+    <div id="detalhes-produto">
+      <p>Carregando produto...</p>
+    </div>
+
+<div class="galeria-produto" id="galeria-imagens">
+  <!-- imagens vão ser inseridas aqui pelo JS -->
+</div>
+
+<!-- Modal (janela de zoom) -->
+<div id="zoom-modal" class="zoom-modal">
+  <span class="fechar-modal" onclick="fecharZoom()">✖</span>
+  <img id="imagem-zoomada" src="" alt="Imagem ampliada">
+</div>
+
+
+  </main>
+
+  <script src="js/produto.js"></script>
+
+  <script>
+  function abrirZoom(src) {
+    document.getElementById("imagem-zoomada").src = src;
+    document.getElementById("zoom-modal").style.display = "flex";
+  }
+
+  function fecharZoom() {
+    document.getElementById("zoom-modal").style.display = "none";
+  }
+</script>
+
+
+</body>
+</html>
+

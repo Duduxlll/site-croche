@@ -1,0 +1,374 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fffaf9;
+  color: #4b3b3b;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+/* Container padrão */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Cabeçalho fixo */
+header {
+  background-color: #fdd9d5;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: #5c3b3b;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #5c3b3b;
+  font-weight: bold;
+  padding: 10px;
+  transition: background 0.3s, color 0.3s;
+}
+
+nav a:hover {
+  background-color: #f4b6b6;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Hero Banner */
+.hero {
+  background-color: #ffe9e6;
+  padding: 60px 20px;
+}
+
+.hero .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.hero-texto {
+  flex: 1 1 300px;
+}
+
+.hero-texto h2 {
+  font-size: 2.5rem;
+  color: #733f3f;
+  margin-bottom: 10px;
+}
+
+.hero-texto p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.botao {
+  background-color: #f4b6b6;
+  color: white;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.botao:hover {
+  background-color: #e89f9f;
+}
+
+.hero-imagem img {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Produtos */
+.produtos h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #8b5757;
+}
+
+.grade-produtos {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.produto {
+  background-color: #fff1ee;
+  border: 1px solid #f2d3ce;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  width: 220px;
+  transition: transform 0.3s;
+}
+
+.produto:hover {
+  transform: scale(1.03);
+}
+
+.produto img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.produto h3 {
+  color: #733f3f;
+  margin-bottom: 5px;
+}
+
+/* Sobre */
+.sobre {
+  background-color: #fffaf9;
+  padding: 60px 20px;
+}
+
+.sobre h2 {
+  font-size: 2rem;
+  color: #8b5757;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sobre p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* Contato */
+.contato {
+  background-color: #ffeaea;
+  padding: 60px 20px;
+}
+
+.contato h2 {
+  text-align: center;
+  color: #8b5757;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #dfb4b4;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+form button {
+  background-color: #f4b6b6;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+form button:hover {
+  background-color: #e89f9f;
+}
+
+/* Rodapé */
+footer {
+  background-color: #fdd9d5;
+  text-align: center;
+  padding: 20px;
+  color: #5e3232;
+  margin-top: 40px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hero .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-imagem img {
+    max-width: 100%;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+  }
+}
+
+.botao-vermais {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 18px;
+  background-color: #f4b6b6;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.botao-vermais:hover {
+  background-color: #e89f9f;
+}
+
+
+.encomenda {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #fff7f4;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.encomenda label {
+  font-size: 0.9rem;
+  color: #733f3f;
+  font-weight: 500;
+}
+
+.encomenda select,
+.encomenda input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e2bcbc;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.botao-encomenda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #25D366;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botao-encomenda:hover {
+  background-color: #1ebc59;
+}
+
+.botao-encomenda img {
+  width: 20px;
+  height: 20px;
+}
+
+.catalogo-apresentacao {
+  background: linear-gradient(to right, #fff1ee, #ffe8e2);
+  padding: 50px 20px;
+  text-align: center;
+  border-radius: 16px;
+  margin: 40px auto;
+  max-width: 900px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  position: relative;
+}
+
+.catalogo-apresentacao h2 {
+  font-size: 2rem;
+  color: #a14d4d;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.catalogo-apresentacao p {
+  font-size: 1.1rem;
+  color: #5f3a3a;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+
+.filtros-categorias {
+  text-align: center;
+  margin: 40px 0 20px;
+}
+
+.filtros-categorias h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #c05252;
+}
+
+.filtros-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.filtros-lista button {
+  padding: 8px 16px;
+  background-color: #f08080;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.filtros-lista button.ativo,
+.filtros-lista button:hover {
+  background-color: #c05252;
+}

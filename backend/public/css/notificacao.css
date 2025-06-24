@@ -1,0 +1,42 @@
+#notificacoes-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notificacao {
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+  color: #5c3b3b;
+  background-color: #fff1ee;
+  border-left: 6px solid #f4b6b6;
+  opacity: 0;
+  animation: fadeInOut 4s forwards;
+  min-width: 250px;
+}
+
+.notificacao.sucesso {
+  border-left-color: #94d3a2;
+  background-color: #eaf9ee;
+  color: #2e6a40;
+}
+
+.notificacao.erro {
+  border-left-color: #f08383;
+  background-color: #fdeeee;
+  color: #732e2e;
+}
+
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translateX(20px); }
+  10%  { opacity: 1; transform: translateX(0); }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(20px); }
+}
+

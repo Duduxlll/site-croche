@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redefinir Senha</title>
+  <link rel="stylesheet" href="css/redefinir-senha.css" />
+  <link rel="stylesheet" href="css/notificacao.css">
+</head>
+<body>
+
+  
+
+  <div class="form-container">
+    <h2>Redefinir Senha</h2>
+    <form id="form-redefinir">
+      <label for="codigo">Código recebido:</label>
+      <input type="text" id="codigo" name="codigo" required />
+
+      <label for="novaSenha">Nova Senha:</label>
+      <input type="password" id="novaSenha" name="novaSenha" required />
+
+      <label for="confirmarSenha">Confirmar Senha:</label>
+      <input type="password" id="confirmarSenha" name="confirmarSenha" required />
+
+      <button type="submit">Salvar Nova Senha</button>
+    </form>
+    <p id="mensagem"></p>
+  </div>
+<div id="notificacoes-container"></div>
+<script src="js/notificacao.js"></script>
+
+
+  <script src="js/redefinir-senha.js"></script>
+</body>
+</html>

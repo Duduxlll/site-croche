@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Artesanato em crochê com carinho. Produtos únicos e personalizados.">
+  <title>Crochê da suelem</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/notificacao.css">
+  <!-- AOS CSS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+</head>
+<body>
+
+  <!-- Cabeçalho com menu fixo -->
+  <header>
+    <div class="container">
+      <h1>Crochê da Suelem</h1>
+      <nav>
+        <ul>
+  <li><a href="index.html">Início</a></li>
+  <li><a href="produtos.html">Produtos</a></li>
+  <li><a href="#sobre">Sobre</a></li>
+  <li><a href="#contato">Contato</a></li>
+  <li id="login-link"><a href="login.html">Login</a></li>
+  <li id="usuario-logado" style="display: none;">
+  <img src="imagens/user-icon.png" alt="Usuário" id="icone-usuario">
+  </li>
+
+      <div class="fundo-janela" id="janela-usuario">
+  <div class="painel-usuario">
+    <button id="fechar-janela">×</button>
+    <h2>Conta</h2>
+    <button id="logout">Sair da conta</button>
+  </div>
+</div>
+
+  </li>
+</ul>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner principal -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-texto">
+        <h2>Feito com Amor, Ponto por Ponto</h2>
+        <p>Encontre peças exclusivas feitas à mão com carinho e delicadeza.</p>
+       <a href="produtos.html" class="botao">Ver Produtos</a>
+
+      </div>
+      <div class="hero-imagem">
+        <img src="imagens/banner.jpg" alt="Cestinha de crochê com novelos" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de produtos -->
+  
+
+      <section class="destaques-home">
+  <div class="container-destaques">
+    <h2>✨ Produtos em Destaque</h2>
+    <div id="destaques-lista" class="destaques-lista"></div>
+    <div class="mais-produtos">
+      <a href="produtos.html" class="botao-vermais">Ver mais produtos</a>
+    </div>
+  </div>
+</section>
+
+
+
+    <!-- Sobre -->
+    <section class="sobre" id="sobre">
+      <div class="container">
+        <h2>Sobre Nós</h2>
+        <p>
+          Olá! Sou apaixonada por crochê desde a infância e decidi transformar essa paixão em uma loja cheia de amor.
+          Cada peça é feita à mão, com muito cuidado e dedicação, para levar mais beleza e aconchego ao seu lar.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contato -->
+    <section class="contato" id="contato">
+      <div class="container">
+        <h2>Fale Conosco</h2>
+        <form id="form-contato">
+  <input type="text" name="nome" placeholder="Seu nome" required>
+  <input type="email" name="email" placeholder="Seu e-mail ou numero de telefone" required>
+  <textarea name="mensagem" placeholder="Sua mensagem" required></textarea>
+  <button type="submit">Enviar mensagem</button>
+</form>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Artes em Crochê — Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+<script src="js/notificacao.js"></script>
+
+  <!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+<script>
+async function carregarDestaques() {
+  try {
+    const resposta = await fetch("http://localhost:3000/site/produtos-destaque");
+    const dados = await resposta.json();
+
+    const lista = document.getElementById("destaques-lista");
+    lista.innerHTML = "";
+
+    if (!dados.sucesso || dados.produtos.length === 0) {
+      lista.innerHTML = "<p>Nenhum produto em destaque.</p>";
+      return;
+    }
+
+    dados.produtos.forEach(produto => {
+      const imagens = JSON.parse(produto.imagens || "[]");
+      const imagem = imagens[0] ? `http://localhost:3000/uploads/${imagens[0]}` : "imagens/sem-imagem.jpg";
+
+      const card = document.createElement("div");
+      card.className = "destaque-card";
+      card.innerHTML = `
+        <img src="${imagem}" alt="${produto.nome}" />
+        <h3>${produto.nome}</h3>
+        <p>R$ ${parseFloat(produto.preco).toFixed(2).replace(".", ",")}</p>
+
+
+        <a href="produto.html?id=${produto.id}" class="botao-vermais">Ver mais</a>
+      `;
+      lista.appendChild(card);
+    });
+  } catch (erro) {
+    console.error("Erro ao carregar destaques:", erro);
+  }
+}
+
+carregarDestaques();
+</script>
+
+
+<div id="notificacoes-container"></div>
+
+</body>
+</html>

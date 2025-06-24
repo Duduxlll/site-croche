@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Confira todos os produtos artesanais em crochê disponíveis para compra.">
+  <title>Produtos - Artes em Crochê</title>
+  <link rel="stylesheet" href="css/produtos.css" />
+  <link rel="stylesheet" href="css/notificacao.css">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header>
+    <div class="container">
+      <h1>Crochê da Suelem</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="index.html#sobre">Sobre</a></li>
+          <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Página de Produtos -->
+  <main class="pagina-produtos" id="produtos">
+
+    <div class="container">
+      <section class="catalogo-apresentacao">
+        <div class="catalogo-texto">
+          <h2>🌸 Catálogo completo</h2>
+          <p>
+            Explore nossas peças feitas à mão com muito carinho, cuidado e atenção a cada detalhe.
+            Cada criação é única, inspirada na delicadeza do artesanato e pensada para encantar.
+          </p>
+        </div>
+      </section>
+<section class="filtros-categorias">
+  <h2>Filtrar por Categoria</h2>
+  <div class="filtros-lista">
+    <button onclick="filtrarProdutos('todos')" class="ativo">Todos</button>
+    <button onclick="filtrarProdutos('Camisas')">Camisas</button>
+    <button onclick="filtrarProdutos('Biquínis')">Biquínis</button>
+    <button onclick="filtrarProdutos('Bolsas')">Bolsas</button>
+    <button onclick="filtrarProdutos('Toalhas')">Toalhas</button>
+    <button onclick="filtrarProdutos('Tapetes')">Tapetes</button>
+    <button onclick="filtrarProdutos('Outros')">Outros</button>
+  </div>
+</section>
+      <div class="grade-produtos" id="produtos-lista"></div>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Artes em Crochê — Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init();</script>
+
+  <!-- Script de Produtos Dinâmicos -->
+  <script>
+    fetch("http://localhost:3000/site/produtos")
+      .then(res => res.json())
+      .then(data => {
+        const lista = document.getElementById("produtos-lista");
+
+        if (data.sucesso) {
+          data.produtos.forEach(p => {
+            const imagens = JSON.parse(p.imagens || "[]");
+            const imagemPrincipal = imagens[0] || "sem-imagem.jpg";
+            const precoFormatado = parseFloat(p.preco).toFixed(2).replace(".", ",");
+
+            const div = document.createElement("div");
+            div.className = "produto";
+            
+            div.setAttribute("data-aos-delay", "200");
+            div.setAttribute("data-categoria", p.categoria || "Outros"); // ← AQUI!
+
+            div.innerHTML = `
+              <img src="http://localhost:3000/uploads/${imagemPrincipal}" alt="${p.nome}">
+              <h3>${p.nome}</h3>
+              <p>R$ ${precoFormatado}</p>
+
+              <div class="encomenda">
+                <label for="tamanho">Tamanho:</label>
+                <select class="tamanho">
+                  <option value="">Selecione</option>
+                  ${JSON.parse(p.tamanhos || "[]").map(t => `<option value="${t}">${t}</option>`).join("")}
+                </select>
+
+                <label for="cor">Cor desejada:</label>
+                <input type="text" class="cor" placeholder="Ex: Rosa, Verde, Azul...">
+
+                <button class="botao-encomenda" onclick="encomendarProduto('${p.nome}')">
+                  <img src="imagens/whatsapp-icon.svg" alt="WhatsApp">
+                  Fazer encomenda via WhatsApp
+                </button>
+              </div>
+
+              <a href="produto.html?id=${p.id}" class="botao-vermais">Ver mais</a>
+            `;
+
+            lista.appendChild(div);
+          });
+        }
+      });
+
+    function encomendarProduto(nome) {
+      const produtoDiv = event.target.closest(".produto");
+      const tamanho = produtoDiv.querySelector(".tamanho").value;
+      const cor = produtoDiv.querySelector(".cor").value;
+
+      let mensagem = `Oi! Vim pelo site e quero encomendar esta peça: ${nome}`;
+      if (tamanho) mensagem += `\nTamanho: ${tamanho}`;
+      if (cor) mensagem += `\nCor desejada: ${cor}`;
+
+      const link = `https://wa.me/5591984633167?text=${encodeURIComponent(mensagem)}`;
+      window.open(link, "_blank");
+    }
+
+function filtrarProdutos(categoria) {
+  document.querySelectorAll(".filtros-lista button").forEach(btn => btn.classList.remove("ativo"));
+  const botaoAtivo = [...document.querySelectorAll(".filtros-lista button")]
+    .find(btn => btn.textContent === categoria || (categoria === 'todos' && btn.textContent === "Todos"));
+  if (botaoAtivo) botaoAtivo.classList.add("ativo");
+
+  document.querySelectorAll(".produto").forEach(prod => {
+    const cat = prod.getAttribute("data-categoria");
+    if (categoria === 'todos' || cat === categoria) {
+      prod.style.display = "block";
+    } else {
+      prod.style.display = "none";
+    }
+  });
+}
+
+
+  </script>
+
+  <div id="notificacoes-container"></div>
+  <script src="js/notificacao.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel de Controle - Crochê</title>
+  <link rel="stylesheet" href="css/painel.css">
+</head>
+<body>
+  <header class="painel-topo">
+    <h1>Painel Administrativo</h1>
+    <button id="sair-painel">Sair</button>
+  </header>
+
+  <div class="navegacao-abas">
+    <button class="ativo" data-alvo="secao-banner">Banner</button>
+    <button data-alvo="secao-produto">Produto</button>
+    <button data-alvo="secao-destaque">Destaques</button>
+    <button data-alvo="secao-editar">Editar/Remover</button>
+    <button data-alvo="secao-tamanhos">Tamanhos</button>
+    <button data-alvo="secao-exportar">Exportar</button>
+         <button data-alvo="secao-metricas">📊 Métricas</button>
+
+
+
+
+
+
+
+
+  </div>
+
+  <main class="painel-conteudo">
+    <div id="secao-banner" class="janela-painel ativa">
+      <section class="bloco-painel">
+        <h2>🖼️ Trocar banner da página inicial</h2>
+        <form id="form-banner">
+          <input type="file" name="banner" accept="image/*" required>
+          <button type="submit">Enviar novo banner</button>
+        </form>
+      </section>
+    </div>
+
+    <div id="secao-produto" class="janela-painel">
+      <section class="bloco-painel">
+        <h2>➕ Adicionar novo produto</h2>
+        <form id="form-produto">
+          <input type="text" name="nome" placeholder="Nome do produto" required>
+          <textarea name="descricao" placeholder="Descrição do produto" required></textarea>
+          <input type="file" name="imagens" id="imagens" multiple accept="image/*">
+
+          <label for="categoria-produto">Categoria:</label>
+          <select id="categoria-produto" name="categoria">
+            <option value="Camisas">Camisas</option>
+            <option value="Biquínis">Biquínis</option>
+            <option value="Bolsas">Bolsas</option>
+            <option value="Toalhas">Toalhas</option>
+            <option value="Tapetes">Tapetes</option>
+            <option value="Outros">Outros</option>
+          </select>
+
+          <input type="number" name="preco" placeholder="Preço" step="0.01" required>
+
+          <label>Tamanhos disponíveis:</label>
+          <div class="checkboxes">
+            <label><input type="checkbox" name="tamanhos" value="P"> P</label>
+            <label><input type="checkbox" name="tamanhos" value="M"> M</label>
+            <label><input type="checkbox" name="tamanhos" value="G"> G</label>
+          </div>
+          <button type="submit">Adicionar produto</button>
+        </form>
+      </section>
+    </div>
+
+    <div id="secao-destaque" class="janela-painel">
+      <section class="bloco-painel">
+        <h2>🧵 Produtos em Destaque</h2>
+        <p>Escolha os 3 produtos que você quer exibir na página inicial do site:</p>
+        <div id="lista-destaques"></div>
+      </section>
+    </div>
+
+    <div id="secao-editar" class="janela-painel">
+      <section class="bloco-painel">
+        <h2>🗑️ Remover produtos existentes</h2>
+
+<select id="filtro-categoria">
+  <option value="">Todas as categorias</option>
+</select>
+<input type="text" id="filtro-nome" placeholder="Buscar por nome">
+
+<button onclick="filtrarProdutos()">Buscar</button>
+
+
+        <div id="lista-produtos"></div>
+
+
+
+        <!-- Modal de Edição -->
+        <div id="modal-edicao" class="modal hidden">
+          <div class="modal-conteudo">
+            <span class="fechar-modal" id="fechar-modal">&times;</span>
+            <h3>Editar Produto</h3>
+            <input id="editar-nome" type="text" placeholder="Nome">
+            <textarea id="editar-descricao" placeholder="Descrição"></textarea>
+            <input id="editar-preco" type="number" placeholder="Preço">
+            <input id="editar-tamanhos" type="text" placeholder="Tamanhos">
+            <select id="editar-categoria">
+              <option value="Camisas">Camisas</option>
+              <option value="Biquínis">Biquínis</option>
+              <option value="Bolsas">Bolsas</option>
+              <option value="Toalhas">Toalhas</option>
+              <option value="Tapetes">Tapetes</option>
+              <option value="Outros">Outros</option>
+            </select>
+            <button id="salvar-edicao">Salvar alterações</button>
+            <button id="cancelar-edicao">Cancelar</button>
+          </div>
+        </div>
+      </section>
+    </div>
+      </section>
+    </div>
+
+    <div id="secao-tamanhos" class="janela-painel">
+      <section class="bloco-painel">
+        <h2>📏 Gerenciar tamanhos disponíveis</h2>
+        <form id="form-tamanho">
+          <input type="text" name="nome" placeholder="Novo tamanho (ex: PP, GG...)" required>
+          <button type="submit">Adicionar tamanho</button>
+        </form>
+        <div id="lista-tamanhos"></div>
+      </section>
+    </div>
+
+    <div id="secao-exportar" class="janela-painel">
+      <section class="bloco-painel">
+        <h2>📤 Exportar catálogo</h2>
+        <button id="btn-exportar">Exportar produtos (.csv)</button>
+      </section>
+    </div>
+
+    
+
+
+<div id="secao-metricas" class="janela-painel">
+  <section id="aba-metricas" class="aba-secao hidden">
+  <h2>📊 Métricas do Painel</h2>
+  <div class="metricas-bloco">
+    <div class="card-metrica">
+      <p>Total de produtos:</p>
+      <h3 id="total-produtos">...</h3>
+    </div>
+    <div class="card-metrica">
+      <p>Produtos em destaque:</p>
+      <h3 id="total-destaques">...</h3>
+    </div>
+    <div class="card-metrica">
+      <p>Último produto adicionado:</p>
+      <h3 id="ultimo-produto">...</h3>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+  </main>
+
+ 
+
+  <script src="../js/notificacao.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    if (!localStorage.getItem("admin")) window.location.href = "login.html";
+
+    // Troca de abas (janelas)
+    document.querySelectorAll(".navegacao-abas button").forEach(botao => {
+      botao.addEventListener("click", () => {
+        document.querySelectorAll(".navegacao-abas button").forEach(b => b.classList.remove("ativo"));
+        document.querySelectorAll(".janela-painel").forEach(secao => secao.classList.remove("ativa"));
+        botao.classList.add("ativo");
+        const alvo = botao.dataset.alvo;
+        document.getElementById(alvo).classList.add("ativa");
+      });
+    });
+  </script>
+
+  <div id="notificacoes-container"></div>
+</body>
+</html>

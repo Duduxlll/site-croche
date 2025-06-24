@@ -1,0 +1,30 @@
+<!-- ESQUECI-SENHA.HTML -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esqueceu sua senha?</title>
+  <link rel="stylesheet" href="css/esqueci-senha.css">
+  <link rel="stylesheet" href="css/notificacao.css">
+</head>
+<body>
+
+  
+
+  <div class="form-container">
+    <h2>Esqueceu sua senha? Digite seu email para recuperar</h2>
+    <form id="form-esqueci">
+      <label for="email">E-MAIL:</label>
+      <input type="email" id="email" required>
+      <button type="submit">ENVIAR CÓDIGO</button>
+    </form>
+    <p id="mensagem"></p>
+  </div>
+
+  <script src="js/esqueci-senha.js"></script>
+  <div id="notificacoes-container"></div>
+  <script src="js/notificacao.js"></script>
+
+</body>
+</html>
