@@ -4,7 +4,7 @@ document.getElementById("form-admin-login").addEventListener("submit", async fun
   const email = document.getElementById("email").value;
   const senha = document.getElementById("senha").value;
 
-  const res = await fetch("http://site-croche.onrender.com/admin/login", {
+  const res = await fetch("https://site-croche.onrender.com/admin/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, senha })

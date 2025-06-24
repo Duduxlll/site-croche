@@ -97,7 +97,7 @@ document.getElementById("form-contato").addEventListener("submit", async functio
   const email = document.querySelector('input[name="email"]').value;
   const mensagem = document.querySelector('textarea[name="mensagem"]').value;
 
-  const res = await fetch("http://site-croche.onrender.com/contato", {
+  const res = await fetch("https://site-croche.onrender.com/contato", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, email, mensagem })

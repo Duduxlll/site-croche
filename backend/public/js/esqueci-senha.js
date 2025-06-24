@@ -3,7 +3,7 @@ document.getElementById("form-esqueci").addEventListener("submit", async (e) => 
   const email = document.getElementById("email").value;
 
   try {
-    const resposta = await fetch("http://site-croche.onrender.com/site/esqueci-senha", {
+    const resposta = await fetch("https://site-croche.onrender.com/site/esqueci-senha", {
 
 
       method: "POST",
