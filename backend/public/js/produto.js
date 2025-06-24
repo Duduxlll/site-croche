@@ -5,7 +5,7 @@ const container = document.getElementById("detalhes-produto");
 if (!id) {
   container.innerHTML = "<p>Produto não encontrado.</p>";
 } else {
-  fetch(`http://localhost:3000/site/produtos/${id}`)
+  fetch(`http://site-croche.onrender.com/site/produtos/${id}`)
     .then(res => res.json())
     .then(data => {
       if (!data.sucesso || !data.produto) {
@@ -19,7 +19,7 @@ if (!id) {
       
 
       const imagemHTML = imagens.map(img =>
-  `<img src="http://localhost:3000/uploads/${img}" alt="${p.nome}" onclick="abrirZoom(this.src)">`
+  `<img src="http://site-croche.onrender.com/uploads/${img}" alt="${p.nome}" onclick="abrirZoom(this.src)">`
 ).join("");
 
 

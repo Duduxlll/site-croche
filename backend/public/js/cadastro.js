@@ -13,7 +13,7 @@ document.getElementById("form-cadastro").addEventListener("submit", async functi
     return;
   }
 
-  const res = await fetch("http://localhost:3000/cadastro", {
+  const res = await fetch("http://site-croche.onrender.com/cadastro", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, email, telefone, senha, codigoDigitado: codigo }),

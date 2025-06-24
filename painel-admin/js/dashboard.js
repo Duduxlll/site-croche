@@ -7,7 +7,7 @@ document.getElementById("form-banner").addEventListener("submit", async function
   e.preventDefault();
   const formData = new FormData(this);
 
-  const res = await fetch("http://localhost:3000/admin/banner", {
+  const res = await fetch("http://site-croche.onrender.com/admin/banner", {
     method: "POST",
     body: formData
   });
@@ -48,7 +48,7 @@ document.getElementById("form-produto").addEventListener("submit", async functio
   });
 
   try {
-    const resposta = await fetch("http://localhost:3000/admin/produtos", {
+    const resposta = await fetch("http://site-croche.onrender.com/admin/produtos", {
       method: "POST",
       body: formData
     });
@@ -76,7 +76,7 @@ async function carregarProdutos() {
   if (nome) query.append("nome", nome);
   if (categoria) query.append("categoria", categoria);
 
-  const res = await fetch(`http://localhost:3000/admin/produtos?${query}`);
+  const res = await fetch(`http://site-croche.onrender.com/admin/produtos?${query}`);
   const data = await res.json();
   const lista = document.getElementById("lista-produtos");
 
@@ -127,7 +127,7 @@ async function carregarProdutos() {
 async function removerProduto(id) {
   if (!confirm("Tem certeza que deseja remover este produto?")) return;
 
-  const res = await fetch(`http://localhost:3000/admin/produtos/${id}`, {
+  const res = await fetch(`http://site-croche.onrender.com/admin/produtos/${id}`, {
     method: "DELETE"
   });
 
@@ -191,7 +191,7 @@ btnSalvar.addEventListener("click", async () => {
   }
 
   try {
-    const resposta = await fetch(`http://localhost:3000/admin/produtos/${produtoEditandoId}`, {
+    const resposta = await fetch(`http://site-croche.onrender.com/admin/produtos/${produtoEditandoId}`, {
 
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -218,7 +218,7 @@ btnSalvar.addEventListener("click", async () => {
 
 async function carregarCategorias() {
   try {
-    const res = await fetch("http://localhost:3000/admin/categorias");
+    const res = await fetch("http://site-croche.onrender.com/admin/categorias");
     const data = await res.json();
     if (data.sucesso) {
       const select = document.getElementById("filtro-categoria");
@@ -241,7 +241,7 @@ carregarCategorias();
 
 
 async function carregarTamanhos() {
-  const res = await fetch("http://localhost:3000/admin/tamanhos");
+  const res = await fetch("http://site-croche.onrender.com/admin/tamanhos");
   const data = await res.json();
   const lista = document.getElementById("lista-tamanhos");
   lista.innerHTML = "";
@@ -274,7 +274,7 @@ document.getElementById("form-tamanho").addEventListener("submit", async functio
   e.preventDefault();
   const nome = this.nome.value;
 
-  const res = await fetch("http://localhost:3000/admin/tamanhos", {
+  const res = await fetch("http://site-croche.onrender.com/admin/tamanhos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome })
@@ -293,7 +293,7 @@ document.getElementById("form-tamanho").addEventListener("submit", async functio
 async function removerTamanho(id) {
   if (!confirm("Remover este tamanho?")) return;
 
-  const res = await fetch(`http://localhost:3000/admin/tamanhos/${id}`, {
+  const res = await fetch(`http://site-croche.onrender.com/admin/tamanhos/${id}`, {
     method: "DELETE"
   });
 
@@ -310,7 +310,7 @@ carregarTamanhos();
 
 
 document.getElementById("btn-exportar").addEventListener("click", async () => {
-  const res = await fetch("http://localhost:3000/admin/exportar-produtos");
+  const res = await fetch("http://site-croche.onrender.com/admin/exportar-produtos");
   const csv = await res.text();
 
   const blob = new Blob([csv], { type: "text/csv" });
@@ -328,7 +328,7 @@ document.getElementById("btn-exportar").addEventListener("click", async () => {
 
 
 async function carregarProdutosParaDestaque() {
-  const res = await fetch("http://localhost:3000/admin/produtos")
+  const res = await fetch("http://site-croche.onrender.com/admin/produtos")
 ;
   const dados = await res.json();
   const container = document.getElementById("lista-destaques");
@@ -373,7 +373,7 @@ async function carregarProdutosParaDestaque() {
 
 
 async function removerDestaque(id) {
-  await fetch(`http://localhost:3000/admin/produtos/${id}/destaque`, {
+  await fetch(`http://site-croche.onrender.com/admin/produtos/${id}/destaque`, {
 
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -386,7 +386,7 @@ async function removerDestaque(id) {
 
 async function definirDestaque(id) {
   try {
-    const res = await fetch(`http://localhost:3000/admin/produtos/${id}/destaque`, {
+    const res = await fetch(`http://site-croche.onrender.com/admin/produtos/${id}/destaque`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -417,7 +417,7 @@ function mostrarAba(abaId) {
 
 async function carregarMetricasPainel() {
   try {
-    const res = await fetch("http://localhost:3000/admin/metricas");
+    const res = await fetch("http://site-croche.onrender.com/admin/metricas");
     const dados = await res.json();
 
     if (dados.sucesso) {
