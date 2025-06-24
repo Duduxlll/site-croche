@@ -31,3 +31,32 @@ document.getElementById("form-cadastro").addEventListener("submit", async functi
   }
 });
 
+document.getElementById("enviar-codigo").addEventListener("click", async function () {
+  const email = document.getElementById("email").value;
+
+  if (!email) {
+    alert("Preencha o e-mail para receber o código.");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://SEU-BACKEND.onrender.com/enviar-codigo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Código enviado para seu e-mail!");
+    } else {
+      alert("Erro: " + data.erro);
+    }
+  } catch (erro) {
+    console.error("Erro ao enviar:", erro);
+    alert("Erro ao enviar o código.");
+  }
+});
