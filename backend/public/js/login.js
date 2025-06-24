@@ -4,7 +4,8 @@ document.querySelector("form").addEventListener("submit", async function (e) {
   const email = document.querySelector('input[type="email"]').value;
   const senha = document.querySelector('input[type="password"]').value;
 
-  const res = await fetch("http://site-croche.onrender.com/login", {
+  const res = await fetch("https://site-croche.onrender.com/login", {
+
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, senha }),
