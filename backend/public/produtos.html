@@ -68,7 +68,7 @@
 
   <!-- Script de Produtos Dinâmicos -->
   <script>
-    fetch("http://localhost:3000/site/produtos")
+    fetch("https://site-croche.onrender.com/site/produtos")
       .then(res => res.json())
       .then(data => {
         const lista = document.getElementById("produtos-lista");
@@ -86,7 +86,7 @@
             div.setAttribute("data-categoria", p.categoria || "Outros"); // ← AQUI!
 
             div.innerHTML = `
-              <img src="http://localhost:3000/uploads/${imagemPrincipal}" alt="${p.nome}">
+              <img src="https://site-croche.onrender.com/uploads/${imagemPrincipal}" alt="${p.nome}">
               <h3>${p.nome}</h3>
               <p>R$ ${precoFormatado}</p>
 

@@ -118,7 +118,7 @@
 <script>
 async function carregarDestaques() {
   try {
-    const resposta = await fetch("http://localhost:3000/site/produtos-destaque");
+    const resposta = await fetch("https://site-croche.onrender.com/site/produtos-destaque");
     const dados = await resposta.json();
 
     const lista = document.getElementById("destaques-lista");
@@ -131,7 +131,7 @@ async function carregarDestaques() {
 
     dados.produtos.forEach(produto => {
       const imagens = JSON.parse(produto.imagens || "[]");
-      const imagem = imagens[0] ? `http://localhost:3000/uploads/${imagens[0]}` : "imagens/sem-imagem.jpg";
+      const imagem = imagens[0] ? `https://site-croche.onrender.com/uploads/${imagens[0]}` : "imagens/sem-imagem.jpg";
 
       const card = document.createElement("div");
       card.className = "destaque-card";
