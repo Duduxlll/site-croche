@@ -44,10 +44,15 @@ app.post('/cadastro', async (req, res) => {
 
     const hash = await bcrypt.hash(senha, 10);
 
-    await pool.query(`
-      UPDATE usuarios SET nome = $1, telefone = $2, senha = $3, verificado = true
-      WHERE email = $4
-    `, [nome, telefone, hash, email]);
+await pool.query(`
+  UPDATE usuarios SET nome = $1, telefone = $2, senha = $3, verificado = true
+  WHERE email = $4
+`, [nome, telefone, hash, email]);
+
+if (usuario.senha === 'pendente') {
+  return res.status(400).json({ sucesso: false, erro: "Cadastro incompleto, senha inválida." });
+}
+
 
     res.status(201).json({ sucesso: true });
   } catch (err) {
