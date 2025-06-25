@@ -34,27 +34,31 @@ app.post('/cadastro', async (req, res) => {
 
   try {
     const resultado = await pool.query(
-      'SELECT codigo_email FROM usuarios WHERE email = $1',
+      'SELECT codigo_email, verificado FROM usuarios WHERE email = $1',
       [email]
     );
 
-    if (resultado.rows.length === 0 || resultado.rows[0].codigo_email !== codigoDigitado) {
-  console.log("Código inválido:", codigoDigitado, resultado.rows[0]?.codigo_email);
-  return res.status(400).json({ sucesso: false, erro: 'Código de verificação inválido.' });
-}
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ sucesso: false, erro: 'E-mail não encontrado' });
+    }
 
+    const { codigo_email, verificado } = resultado.rows[0];
+
+    if (verificado) {
+      return res.status(400).json({ sucesso: false, erro: 'Usuário já verificado' });
+    }
+
+    if (codigo_email !== codigoDigitado) {
+      return res.status(400).json({ sucesso: false, erro: 'Código incorreto' });
+    }
 
     const hash = await bcrypt.hash(senha, 10);
 
-await pool.query(`
-  UPDATE usuarios SET nome = $1, telefone = $2, senha = $3, verificado = true
-  WHERE email = $4
-`, [nome, telefone, hash, email]);
-
-if (usuario.senha === 'pendente') {
-  return res.status(400).json({ sucesso: false, erro: "Cadastro incompleto, senha inválida." });
-}
-
+    await pool.query(`
+      UPDATE usuarios 
+      SET nome = $1, telefone = $2, senha = $3, verificado = true 
+      WHERE email = $4
+    `, [nome, telefone, hash, email]);
 
     res.status(201).json({ sucesso: true });
   } catch (err) {
@@ -62,6 +66,7 @@ if (usuario.senha === 'pendente') {
     res.status(500).json({ sucesso: false, erro: err.message });
   }
 });
+
 
 
 // Rota de login
@@ -77,20 +82,22 @@ app.post('/login', async (req, res) => {
 
     const usuario = result.rows[0];
 
-    // Verificar senha
-    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    if (!usuario.verificado) {
+      return res.status(403).json({ sucesso: false, erro: 'Conta não verificada. Use o código enviado por e-mail.' });
+    }
 
+    const senhaValida = await bcrypt.compare(senha, usuario.senha);
     if (!senhaValida) {
       return res.status(401).json({ sucesso: false, erro: 'Senha incorreta' });
     }
 
-    // Login bem-sucedido
     res.json({ sucesso: true, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email } });
   } catch (err) {
     console.error(err);
     res.status(500).json({ sucesso: false, erro: err.message });
   }
 });
+
 
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000');
@@ -109,16 +116,18 @@ app.post('/enviar-codigo', async (req, res) => {
     const resultado = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
 
     if (resultado.rows.length > 0) {
-      // usuário já existe, só atualiza o código
-      await pool.query(
-        'UPDATE usuarios SET codigo_email = $1 WHERE email = $2',
-        [codigo, email]
-      );
+      // Só atualiza o código se não estiver verificado ainda
+      if (!resultado.rows[0].verificado) {
+        await pool.query(
+          'UPDATE usuarios SET codigo_email = $1 WHERE email = $2',
+          [codigo, email]
+        );
+      }
     } else {
-      // insere novo registro com email e código, usa nome temporário "pendente"
+      // Inserção nova
       await pool.query(
-        'INSERT INTO usuarios (nome, email, codigo_email, senha) VALUES ($1, $2, $3, $4)',
-        ['pendente', email, codigo, 'pendente']
+        'INSERT INTO usuarios (nome, email, codigo_email, senha, verificado) VALUES ($1, $2, $3, $4, $5)',
+        ['pendente', email, codigo, 'pendente', false]
       );
     }
 
@@ -128,6 +137,7 @@ app.post('/enviar-codigo', async (req, res) => {
     res.status(500).json({ sucesso: false, erro: err.message });
   }
 });
+
 
 
 app.post("/contato", async (req, res) => {
