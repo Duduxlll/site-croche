@@ -39,8 +39,10 @@ app.post('/cadastro', async (req, res) => {
     );
 
     if (resultado.rows.length === 0 || resultado.rows[0].codigo_email !== codigoDigitado) {
-      return res.status(400).json({ sucesso: false, erro: 'Código de verificação inválido.' });
-    }
+  console.log("Código inválido:", codigoDigitado, resultado.rows[0]?.codigo_email);
+  return res.status(400).json({ sucesso: false, erro: 'Código de verificação inválido.' });
+}
+
 
     const hash = await bcrypt.hash(senha, 10);
 
