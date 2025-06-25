@@ -13,7 +13,7 @@ document.getElementById("form-cadastro").addEventListener("submit", async functi
     return;
   }
 
-  const res = await fetch("https://site-croche.onrender.com/enviar-codigo", {
+  const res = await fetch("https://site-croche.onrender.com/cadastro", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, email, telefone, senha, codigoDigitado: codigo }),
@@ -30,6 +30,7 @@ document.getElementById("form-cadastro").addEventListener("submit", async functi
     notificar("Erro no cadastro: " + data.erro, "erro");
   }
 });
+
 
 document.getElementById("enviar-codigo").addEventListener("click", async function () {
   const email = document.getElementById("email").value;
