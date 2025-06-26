@@ -131,7 +131,8 @@ async function carregarDestaques() {
 
     dados.produtos.forEach(produto => {
       const imagens = JSON.parse(produto.imagens || "[]");
-      const imagem = imagens[0] ? `https://site-croche.onrender.com/uploads/${imagens[0]}` : "imagens/sem-imagem.jpg";
+      const imagem = imagens[0] || "imagens/sem-imagem.jpg";
+
 
       const card = document.createElement("div");
       card.className = "destaque-card";
