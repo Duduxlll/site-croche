@@ -19,8 +19,9 @@ if (!id) {
       
 
       const imagemHTML = imagens.map(img =>
-  `<img src="https://site-croche.onrender.com/uploads/${img}" alt="${p.nome}" onclick="abrirZoom(this.src)">`
+  `<img src="${img}" alt="${p.nome}" onclick="abrirZoom(this.src)">`
 ).join("");
+
 
 
       container.innerHTML = `

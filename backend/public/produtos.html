@@ -86,7 +86,7 @@
             div.setAttribute("data-categoria", p.categoria || "Outros"); // ← AQUI!
 
             div.innerHTML = `
-              <img src="https://site-croche.onrender.com/uploads/${imagemPrincipal}" alt="${p.nome}">
+              <img src="${imagemPrincipal}" alt="${p.nome}">
               <h3>${p.nome}</h3>
               <p>R$ ${precoFormatado}</p>
 

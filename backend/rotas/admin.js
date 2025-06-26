@@ -58,9 +58,11 @@ router.post("/banner", upload.single("banner"), async (req, res) => {
 
   try {
     await pool.query(`
-      INSERT INTO banners (imagem) VALUES ($1)
-      ON CONFLICT (id) DO UPDATE SET imagem = $1
-    `, [nomeArquivo]);
+  INSERT INTO banners (imagem) VALUES ($1)
+  ON CONFLICT (id) DO UPDATE SET imagem = $1
+`, [nomeArquivo]);
+
+
 
     res.json({ sucesso: true });
   } catch (err) {
@@ -136,9 +138,10 @@ router.delete("/produtos/:id", async (req, res) => {
     if (produto.rows.length === 0) return res.status(404).json({ sucesso: false, erro: "Produto não encontrado." });
 
     const imagens = JSON.parse(produto.rows[0].imagens || "[]");
-imagens.forEach(nome => {
-  const caminho = path.join(pastaUploads, nome);
-  if (fs.existsSync(caminho)) fs.unlinkSync(caminho);
+imagens.forEach(nome => { const caminho = path.join(pastaUploads, nome);
+if (fs.existsSync(caminho)) fs.unlinkSync(caminho);
+
+  
 });
 
 
