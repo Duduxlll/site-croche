@@ -48,14 +48,10 @@ const pastaUploads = path.join(__dirname, "..", "uploads");
 if (!fs.existsSync(pastaUploads)) fs.mkdirSync(pastaUploads);
 
 // Configurar multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, pastaUploads),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${uuidv4()}${ext}`);
-  }
-});
+const multer = require("multer");
+const { storage } = require("../cloudinary");
 const upload = multer({ storage });
+
 
 router.post("/banner", upload.single("banner"), async (req, res) => {
   const nomeArquivo = req.file.filename;
@@ -78,14 +74,14 @@ router.post("/banner", upload.single("banner"), async (req, res) => {
 router.post("/produtos", upload.array("imagens", 3), async (req, res) => {
   const { nome, descricao, preco, tamanhos, categoria } = req.body;
 
-  const imagens = req.files.map(arq => arq.filename);
+  const imagens = req.files.map(file => file.path); // <-- LINK direto da imagem no Cloudinary
 
   const imagensJson = JSON.stringify(imagens);
 
-await pool.query(
-  "INSERT INTO produtos (nome, descricao, preco, tamanhos, imagens, categoria) VALUES ($1, $2, $3, $4, $5, $6)",
-  [nome, descricao, preco, tamanhos, imagensJson, categoria]
-);
+  await pool.query(
+    "INSERT INTO produtos (nome, descricao, preco, tamanhos, imagens, categoria) VALUES ($1, $2, $3, $4, $5, $6)",
+    [nome, descricao, preco, tamanhos, imagensJson, categoria]
+  );
 
   res.json({ sucesso: true });
 });
