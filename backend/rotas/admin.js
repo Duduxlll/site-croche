@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
 
 
 const path = require("path");
-const multer = require("multer");
+
 const fs = require("fs");
 
 // Criar pasta /uploads se não existir
