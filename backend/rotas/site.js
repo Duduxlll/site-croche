@@ -117,4 +117,16 @@ router.get("/produtos/:id", async (req, res) => {
   }
 });
 
+router.get("/site/categorias", async (req, res) => {
+  try {
+    const resultado = await pool.query("SELECT * FROM categorias ORDER BY nome");
+    res.json({ sucesso: true, categorias: resultado.rows });
+  } catch (erro) {
+    console.error("Erro ao carregar categorias:", erro);
+    res.status(500).json({ sucesso: false });
+  }
+});
+
+
+
 module.exports = router;
