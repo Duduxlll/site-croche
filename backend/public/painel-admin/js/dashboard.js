@@ -446,7 +446,8 @@ function mostrarAba(aba) {
 
 async function carregarCategoriasGerenciar() {
   try {
-    const resposta = await fetch("/site/categorias");
+    const resposta = await fetch(fetch("https://site-croche.onrender.com/site/categorias")  // caso você esteja usando a API da Render
+);
     const dados = await resposta.json();
 
     const lista = document.getElementById("lista-categorias");
@@ -474,7 +475,8 @@ document.getElementById("form-categoria").addEventListener("submit", async (e) =
   const nome = document.getElementById("nova-categoria").value.trim();
   if (!nome) return;
 
-  await fetch("/admin/categorias", {
+  await fetch(fetch("https://site-croche.onrender.com/site/categorias")  // caso você esteja usando a API da Render
+, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome })
@@ -503,7 +505,8 @@ async function excluirCategoria(id) {
 
 async function atualizarSelectCategorias() {
   try {
-    const res = await fetch("/admin/categorias-gerenciar");
+    const res = await fetch(fetch("https://site-croche.onrender.com/site/categorias")  // caso você esteja usando a API da Render
+);
     const data = await res.json();
 
     if (data.sucesso) {
