@@ -432,8 +432,96 @@ async function carregarMetricasPainel() {
   }
 }
 
+function mostrarAba(aba) {
+  document.querySelectorAll(".aba").forEach(div => div.style.display = "none");
+  document.getElementById(`aba-${aba}`).style.display = "block";
+
+  if (aba === "categorias") {
+    carregarCategoriasGerenciar();
+  }
+}
 
 
+
+
+async function carregarCategoriasGerenciar() {
+  try {
+    const resposta = await fetch("/site/categorias");
+    const dados = await resposta.json();
+
+    const lista = document.getElementById("lista-categorias");
+    lista.innerHTML = "";
+
+    dados.categorias.forEach(cat => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span>${cat}</span>
+        <button onclick="removerCategoria('${cat}')">Excluir</button>
+      `;
+      lista.appendChild(li);
+    });
+  } catch (erro) {
+    console.error("Erro ao carregar categorias:", erro);
+  }
+
+
+
+  atualizarSelectCategorias(); // ← Atualiza os <select> dos produtos
+}
+
+document.getElementById("form-categoria").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const nome = document.getElementById("nova-categoria").value.trim();
+  if (!nome) return;
+
+  await fetch("/admin/categorias", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nome })
+  });
+
+  document.getElementById("nova-categoria").value = "";
+  carregarCategoriasGerenciar();
+});
+
+async function removerCategoria(nome) {
+  if (!confirm("Deseja realmente excluir esta categoria?")) return;
+
+  await fetch(`/admin/categorias/${encodeURIComponent(nome)}`, {
+    method: "DELETE"
+  });
+
+  carregarCategoriasGerenciar();
+}
+
+
+async function excluirCategoria(id) {
+  await fetch(`/admin/categorias-gerenciar/${id}`, { method: "DELETE" });
+  carregarCategoriasGerenciar();
+}
+
+
+async function atualizarSelectCategorias() {
+  try {
+    const res = await fetch("/admin/categorias-gerenciar");
+    const data = await res.json();
+
+    if (data.sucesso) {
+      const selects = document.querySelectorAll(".select-categorias");
+      selects.forEach(select => {
+        select.innerHTML = '<option value="">Selecione</option>';
+        data.categorias.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c.nome;
+          opt.textContent = c.nome;
+          select.appendChild(opt);
+        });
+      });
+    }
+  } catch (err) {
+    console.error("Erro ao atualizar categorias nos selects:", err);
+  }
+}
 
 
 

@@ -243,6 +243,7 @@ router.post("/produtos/:id/destaque", async (req, res) => {
 
 
 
+
 // MÉTRICAS
 router.get("/metricas", async (req, res) => {
   try {
@@ -263,6 +264,44 @@ router.get("/metricas", async (req, res) => {
     res.status(500).json({ sucesso: false, erro: "Erro ao carregar métricas." });
   }
 });
+
+
+
+
+router.get("/categorias", async (req, res) => {
+  try {
+    const resultado = await pool.query("SELECT DISTINCT categoria FROM produtos WHERE categoria IS NOT NULL");
+    const categorias = resultado.rows.map(row => row.categoria);
+    res.json({ sucesso: true, categorias });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ sucesso: false, erro: "Erro ao buscar categorias." });
+  }
+});
+
+router.post("/categorias", async (req, res) => {
+  const { nome } = req.body;
+  try {
+    await pool.query("INSERT INTO categorias (nome) VALUES ($1) ON CONFLICT DO NOTHING", [nome]);
+    res.json({ sucesso: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ sucesso: false, erro: "Erro ao adicionar categoria." });
+  }
+});
+
+router.delete("/categorias/:nome", async (req, res) => {
+  const { nome } = req.params;
+  try {
+    await pool.query("DELETE FROM categorias WHERE nome = $1", [nome]);
+    res.json({ sucesso: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ sucesso: false, erro: "Erro ao excluir categoria." });
+  }
+});
+
+
 
 
 module.exports = router;

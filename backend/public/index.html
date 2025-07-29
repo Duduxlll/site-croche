@@ -7,6 +7,7 @@
   <title>Artes em Crochê</title>
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/notificacao.css">
+
   <!-- AOS CSS -->
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 
@@ -133,7 +134,6 @@ async function carregarDestaques() {
       const imagens = JSON.parse(produto.imagens || "[]");
       const imagem = imagens[0] || "imagens/sem-imagem.jpg";
 
-
       const card = document.createElement("div");
       card.className = "destaque-card";
       card.innerHTML = `
@@ -141,24 +141,25 @@ async function carregarDestaques() {
         <h3>${produto.nome}</h3>
         <p>R$ ${parseFloat(produto.preco).toFixed(2).replace(".", ",")}</p>
 
-<div class="encomenda">
-                <label for="tamanho">Tamanho:</label>
-                <select class="tamanho">
-                  <option value="">Selecione</option>
-                  ${JSON.parse(p.tamanhos || "[]").map(t => `<option value="${t}">${t}</option>`).join("")}
-                </select>
+        <div class="encomenda">
+          <label for="tamanho">Tamanho:</label>
+          <select class="tamanho">
+            <option value="">Selecione</option>
+            ${JSON.parse(produto.tamanhos || "[]").map(t => `<option value="${t}">${t}</option>`).join("")}
+          </select>
 
-                <label for="cor">Cor desejada:</label>
-                <input type="text" class="cor" placeholder="Ex: Rosa, Verde, Azul...">
+          <label for="cor">Cor desejada:</label>
+          <input type="text" class="cor" placeholder="Ex: Rosa, Verde, Azul...">
 
-                <button class="botao-encomenda" onclick="encomendarProduto('${p.nome}')">
-                  <img src="imagens/whatsapp-icon.svg" alt="WhatsApp">
-                  Fazer encomenda via WhatsApp
-                </button>
-              </div>
+          <button class="botao-encomenda" onclick="encomendarProduto(event, '${produto.nome}')">
+            <img src="imagens/whatsapp-icon.svg" alt="WhatsApp">
+            Fazer encomenda via WhatsApp
+          </button>
+        </div>
 
         <a href="produto.html?id=${produto.id}" class="botao-vermais">Ver mais</a>
       `;
+
       lista.appendChild(card);
     });
   } catch (erro) {
@@ -167,6 +168,21 @@ async function carregarDestaques() {
 }
 
 carregarDestaques();
+
+function encomendarProduto(event, nome) {
+  const produtoDiv = event.target.closest(".destaque-card");
+  const tamanho = produtoDiv.querySelector(".tamanho").value;
+  const cor = produtoDiv.querySelector(".cor").value;
+
+  let mensagem = `Oi! Vim pelo site e quero encomendar esta peça: ${nome}`;
+  if (tamanho) mensagem += `\nTamanho: ${tamanho}`;
+  if (cor) mensagem += `\nCor desejada: ${cor}`;
+
+  const link = `https://wa.me/5591984633167?text=${encodeURIComponent(mensagem)}`;
+  window.open(link, "_blank");
+}
+
+
 </script>
 
 
