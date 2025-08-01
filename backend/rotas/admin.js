@@ -270,10 +270,16 @@ router.get("/metricas", async (req, res) => {
 // CATEGORIAS
 
 // Lista todas as categorias
-router.get("/categorias-gerenciar", async (req, res) => {
-  const categorias = await db.query("SELECT * FROM categorias");
-  res.json({ sucesso: true, categorias });
+app.get("/admin/categorias-gerenciar", async (req, res) => {
+  try {
+    const resultado = await pool.query("SELECT * FROM categorias ORDER BY id DESC");
+    res.json({ sucesso: true, categorias: resultado.rows });
+  } catch (erro) {
+    console.error("Erro ao buscar categorias:", erro);
+    res.status(500).json({ sucesso: false, erro: "Erro ao buscar categorias" });
+  }
 });
+
 
 // Adiciona nova categoria
 router.post("/categorias", async (req, res) => {

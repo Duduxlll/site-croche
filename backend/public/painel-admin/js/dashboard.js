@@ -432,12 +432,7 @@ async function carregarMetricasPainel() {
   }
 }
 
-function mostrarSecao(id) {
-  document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
-  document.getElementById(id).style.display = "block";
 
-  if (id === "aba-categorias") carregarCategorias(); // ✅ ATUALIZA!
-}
 
 
 
