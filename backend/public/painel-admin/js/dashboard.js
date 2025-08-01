@@ -435,11 +435,15 @@ async function carregarMetricasPainel() {
 function mostrarSecao(id) {
   document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
   document.getElementById(id).style.display = "block";
+
+  if (id === "aba-categorias") carregarCategorias(); // ✅ ATUALIZA!
 }
 
 
+
 async function carregarCategorias() {
-  const res = await fetch("/admin/categorias-gerenciar");
+  const res = await fetch("https://site-croche.onrender.com/admin/categorias-gerenciar");
+
   const data = await res.json();
 
   if (data.sucesso) {
@@ -462,7 +466,7 @@ async function carregarCategorias() {
 
 async function salvarCategoria(id, btn) {
   const nome = btn.parentElement.querySelector("input").value;
-  await fetch(`/admin/categorias/${id}`, {
+  await fetch(`https://site-croche.onrender.com/admin/categorias/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome })
@@ -472,7 +476,7 @@ async function salvarCategoria(id, btn) {
 
 async function excluirCategoria(id) {
   if (confirm("Tem certeza que deseja excluir esta categoria?")) {
-    await fetch(`/admin/categorias/${id}`, { method: "DELETE" });
+    await fetch(`https://site-croche.onrender.com/admin/categorias/${id}`, { method: "DELETE" });
     carregarCategorias();
   }
 }
@@ -481,7 +485,7 @@ document.getElementById("form-categoria").addEventListener("submit", async e => 
   e.preventDefault();
   const nome = document.getElementById("nova-categoria").value.trim();
   if (nome) {
-    await fetch("/admin/categorias", {
+    await fetch("https://site-croche.onrender.com/admin/categorias", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nome })

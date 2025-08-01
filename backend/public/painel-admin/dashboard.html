@@ -21,7 +21,8 @@
     <button data-alvo="secao-exportar">Exportar</button>
          <button data-alvo="secao-metricas">📊 Métricas</button>
 
-      <button onclick="mostrarSecao('secao-categorias')">Categorias</button>
+      <button onclick="mostrarSecao('aba-categorias')">Categorias</button>
+
 
 
 
@@ -161,13 +162,12 @@
 
 
 
-<section id="secao-categorias" style="display: none;">
+<section id="aba-categorias" class="aba-secao hidden">
   <h2>Gerenciar Categorias</h2>
   <form id="form-categoria">
-    <input type="text" id="nova-categoria" placeholder="Nome da nova categoria" required>
+    <input type="text" id="nova-categoria" placeholder="Nova categoria" required />
     <button type="submit">Adicionar</button>
   </form>
-
   <ul id="lista-categorias"></ul>
 </section>
 
