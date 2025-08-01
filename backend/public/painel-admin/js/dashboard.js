@@ -443,7 +443,6 @@ function mostrarSecao(id) {
 
 async function carregarCategorias() {
   const res = await fetch("https://site-croche.onrender.com/admin/categorias-gerenciar");
-
   const data = await res.json();
 
   if (data.sucesso) {
@@ -476,7 +475,9 @@ async function salvarCategoria(id, btn) {
 
 async function excluirCategoria(id) {
   if (confirm("Tem certeza que deseja excluir esta categoria?")) {
-    await fetch(`https://site-croche.onrender.com/admin/categorias/${id}`, { method: "DELETE" });
+    await fetch(`https://site-croche.onrender.com/admin/categorias/${id}`, {
+      method: "DELETE"
+    });
     carregarCategorias();
   }
 }
@@ -495,7 +496,6 @@ document.getElementById("form-categoria").addEventListener("submit", async e => 
   }
 });
 
-// Atualiza selects nas seções de adicionar e editar produto
 function atualizarSelectCategorias(categorias) {
   const selects = document.querySelectorAll(".select-categorias");
   selects.forEach(select => {
@@ -503,6 +503,11 @@ function atualizarSelectCategorias(categorias) {
   });
 }
 
+// Chamar ao entrar na aba
+document.querySelector('button[data-aba="categorias"]').addEventListener("click", () => {
+  mostrarSecao("aba-categorias");
+  carregarCategorias();
+});
 
 
 
