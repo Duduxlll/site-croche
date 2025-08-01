@@ -268,39 +268,58 @@ router.get("/metricas", async (req, res) => {
 
 
 
-router.get("/categorias", async (req, res) => {
+// Listar categorias
+router.get("/categorias-gerenciar", async (req, res) => {
   try {
-    const resultado = await pool.query("SELECT DISTINCT categoria FROM produtos WHERE categoria IS NOT NULL");
-    const categorias = resultado.rows.map(row => row.categoria);
-    res.json({ sucesso: true, categorias });
+    const resultado = await pool.query("SELECT * FROM categorias ORDER BY nome ASC");
+    res.json({ sucesso: true, categorias: resultado.rows });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ sucesso: false, erro: "Erro ao buscar categorias." });
+    res.status(500).json({ sucesso: false, erro: "Erro ao listar categorias." });
   }
 });
 
-router.post("/admin/categorias", async (req, res) => {
+// Adicionar categoria
+router.post("/categorias", async (req, res) => {
   const { nome } = req.body;
+  if (!nome) return res.status(400).json({ sucesso: false, erro: "Nome da categoria é obrigatório." });
+
   try {
-    await pool.query("INSERT INTO categorias (nome) VALUES ($1)", [nome]);
+    await pool.query("INSERT INTO categorias (nome) VALUES ($1) ON CONFLICT DO NOTHING", [nome]);
     res.json({ sucesso: true });
-  } catch (erro) {
-    console.error("Erro ao adicionar categoria:", erro);
-    res.status(500).json({ sucesso: false });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ sucesso: false, erro: "Erro ao adicionar categoria." });
   }
 });
 
-router.put("/admin/categorias/:id", async (req, res) => {
-  const { nome } = req.body;
+// Editar categoria
+router.put("/categorias/:id", async (req, res) => {
   const { id } = req.params;
+  const { nome } = req.body;
+
   try {
     await pool.query("UPDATE categorias SET nome = $1 WHERE id = $2", [nome, id]);
     res.json({ sucesso: true });
-  } catch (erro) {
-    console.error("Erro ao editar categoria:", erro);
-    res.status(500).json({ sucesso: false });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ sucesso: false, erro: "Erro ao editar categoria." });
   }
 });
+
+// Remover categoria
+router.delete("/categorias/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await pool.query("DELETE FROM categorias WHERE id = $1", [id]);
+    res.json({ sucesso: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ sucesso: false, erro: "Erro ao remover categoria." });
+  }
+});
+
 
 
 
