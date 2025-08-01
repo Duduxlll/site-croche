@@ -270,7 +270,8 @@ router.get("/metricas", async (req, res) => {
 // ROTAS DE CATEGORIA
 router.get("/categorias-gerenciar", async (req, res) => {
   try {
-    const resultado = await pool.query("SELECT * FROM categorias ORDER BY id DESC");
+    const resultado = await db.query("SELECT * FROM categorias ORDER BY id DESC");
+
     res.json({ sucesso: true, categorias: resultado.rows });
   } catch (erro) {
     console.error("Erro ao buscar categorias:", erro);
