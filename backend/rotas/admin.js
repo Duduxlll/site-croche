@@ -270,7 +270,7 @@ router.get("/metricas", async (req, res) => {
 // ROTAS DE CATEGORIA
 router.get("/categorias-gerenciar", async (req, res) => {
   try {
-    const resultado = await db.query("SELECT * FROM categorias ORDER BY id DESC");
+    const resultado = await pool.query("SELECT * FROM categorias ORDER BY id DESC");
     res.json({ sucesso: true, categorias: resultado.rows });
   } catch (erro) {
     console.error("Erro ao buscar categorias:", erro);
@@ -280,20 +280,20 @@ router.get("/categorias-gerenciar", async (req, res) => {
 
 router.post("/categorias", async (req, res) => {
   const { nome } = req.body;
-  await db.query("INSERT INTO categorias (nome) VALUES ($1)", [nome]);
+  await pool.query("INSERT INTO categorias (nome) VALUES ($1)", [nome]);
   res.json({ sucesso: true });
 });
 
 router.put("/categorias/:id", async (req, res) => {
   const { id } = req.params;
   const { nome } = req.body;
-  await db.query("UPDATE categorias SET nome = $1 WHERE id = $2", [nome, id]);
+  await pool.query("UPDATE categorias SET nome = $1 WHERE id = $2", [nome, id]);
   res.json({ sucesso: true });
 });
 
 router.delete("/categorias/:id", async (req, res) => {
   const { id } = req.params;
-  await db.query("DELETE FROM categorias WHERE id = $1", [id]);
+  await pool.query("DELETE FROM categorias WHERE id = $1", [id]);
   res.json({ sucesso: true });
 });
 
