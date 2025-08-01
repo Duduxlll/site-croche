@@ -433,6 +433,12 @@ async function carregarMetricasPainel() {
 }
 
 
+function mostrarSecao(id) {
+  document.querySelectorAll(".secao").forEach(secao => {
+    secao.style.display = "none";
+  });
+  document.getElementById(id).style.display = "block";
+}
 
 
 
