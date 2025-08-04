@@ -21,7 +21,7 @@
     <button data-alvo="secao-exportar">Exportar</button>
          <button data-alvo="secao-metricas">📊 Métricas</button>
 
-      <button onclick="mostrarSecao('aba-categorias')">Categorias</button>
+
 
 
 
@@ -58,8 +58,15 @@
           <textarea name="descricao" placeholder="Descrição do produto" required></textarea>
           <input type="file" name="imagens" id="imagens" multiple accept="image/*">
 
-          <label for="categoria-produto">Categoria:</label>
-          <select class="select-categorias" id="categoria-produto"></select>
+         <label for="categoria-produto">Categoria:</label>
+        <select id="categoria-produto" name="categoria" required>
+          <option value="Camisas">Camisas</option>
+          <option value="Biquínis">Biquínis</option>
+          <option value="Bolsas">Bolsas</option>
+          <option value="Toalhas">Toalhas</option>
+          <option value="Tapetes">Tapetes</option>
+          <option value="Outros">Outros</option>
+        </select>
 
 
           <input type="number" name="preco" placeholder="Preço" step="0.01" required>
@@ -108,7 +115,14 @@
             <textarea id="editar-descricao" placeholder="Descrição"></textarea>
             <input id="editar-preco" type="number" placeholder="Preço">
             <input id="editar-tamanhos" type="text" placeholder="Tamanhos">
-            <select class="select-categorias" id="editar-categoria"></select>
+            <select id="editar-categoria">
+        <option value="Camisas">Camisas</option>
+        <option value="Biquínis">Biquínis</option>
+        <option value="Bolsas">Bolsas</option>
+        <option value="Toalhas">Toalhas</option>
+        <option value="Tapetes">Tapetes</option>
+        <option value="Outros">Outros</option>
+      </select>
 
 
             <button id="salvar-edicao">Salvar alterações</button>
@@ -163,19 +177,7 @@
 
 
 
-<!-- Seção da aba de categorias -->
- <div class="secao" id="categorias" style="display: none;">
-  
 
-<section id="aba-categorias" class="aba-secao" style="display: none;">
-  <h2>Gerenciar Categorias</h2>
-  <form id="form-categoria">
-    <input type="text" id="nova-categoria" placeholder="Nova categoria" required />
-    <button type="submit">Adicionar</button>
-  </form>
-  <ul id="lista-categorias"></ul>
-</section>
- </div>
 
 
 

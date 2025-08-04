@@ -433,82 +433,9 @@ async function carregarMetricasPainel() {
 }
 
 
-function mostrarSecao(id) {
-  document.querySelectorAll(".secao").forEach(secao => {
-    secao.style.display = "none";
-  });
-  document.getElementById(id).style.display = "block";
-}
 
 
 
-async function carregarCategorias() {
-  const res = await fetch("https://site-croche.onrender.com/admin/categorias-gerenciar");
-  const data = await res.json();
-
-  if (data.sucesso) {
-    const lista = document.getElementById("lista-categorias");
-    lista.innerHTML = "";
-
-    data.categorias.forEach(cat => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <input type="text" value="${cat.nome}" data-id="${cat.id}">
-        <button onclick="salvarCategoria(${cat.id}, this)">Salvar</button>
-        <button onclick="excluirCategoria(${cat.id})">Excluir</button>
-      `;
-      lista.appendChild(li);
-    });
-
-    atualizarSelectCategorias(data.categorias);
-  }
-}
-
-async function salvarCategoria(id, btn) {
-  const nome = btn.parentElement.querySelector("input").value;
-  await fetch(`https://site-croche.onrender.com/admin/categorias/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nome })
-  });
-  carregarCategorias();
-}
-
-async function excluirCategoria(id) {
-  if (confirm("Tem certeza que deseja excluir esta categoria?")) {
-    await fetch(`https://site-croche.onrender.com/admin/categorias/${id}`, {
-      method: "DELETE"
-    });
-    carregarCategorias();
-  }
-}
-
-document.getElementById("form-categoria").addEventListener("submit", async e => {
-  e.preventDefault();
-  const nome = document.getElementById("nova-categoria").value.trim();
-  if (nome) {
-    await fetch("https://site-croche.onrender.com/admin/categorias", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome })
-    });
-    document.getElementById("nova-categoria").value = "";
-    carregarCategorias();
-  }
-});
-
-function atualizarSelectCategorias(categorias) {
-  const selects = document.querySelectorAll(".select-categorias");
-  selects.forEach(select => {
-    select.innerHTML = "<option value=''>Selecione</option>" + categorias.map(c => `<option value="${c.nome}">${c.nome}</option>`).join("");
-  });
-}
-
-// Chamar ao entrar na aba
-document.querySelector('button[data-aba="categorias"]').addEventListener("click", () => {
-  mostrarSecao("aba-categorias");
-  carregarCategorias();
-});
 
 
 
