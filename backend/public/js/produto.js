@@ -54,6 +54,6 @@ function encomendar(nomeProduto) {
   const cor = document.getElementById("cor").value;
 
   const texto = `Olá! Vim pelo site e gostaria de encomendar o produto "${nomeProduto}".\nTamanho: ${tamanho}\nCor: ${cor}`;
-  const url = `https://wa.me/5591984633167?text=${encodeURIComponent(texto)}`;
+  const url = `https://wa.me/5591985725143?text=${encodeURIComponent(texto)}`;
   window.open(url, "_blank");
 }

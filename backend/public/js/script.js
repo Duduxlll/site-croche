@@ -84,7 +84,7 @@ Tamanho: ${tamanho}
 Cor desejada: ${cor}
 Pode me informar as opções disponíveis?`;
 
-  const telefone = "91984633167"; // Ex: 5599999999999 (sem + ou espaços)
+  const telefone = "91985725143"; // Ex: 5599999999999 (sem + ou espaços)
   const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
   window.open(url, "_blank");
 }
