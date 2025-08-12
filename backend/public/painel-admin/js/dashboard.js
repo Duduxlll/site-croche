@@ -1,6 +1,6 @@
 document.getElementById("sair-painel").addEventListener("click", () => {
   localStorage.removeItem("admin");
-  window.location.href = "admin-login.html";
+  window.location.href = "login.html";
 });
 
 document.getElementById("form-banner").addEventListener("submit", async function (e) {
